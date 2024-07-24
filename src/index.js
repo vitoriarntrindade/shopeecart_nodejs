@@ -1,19 +1,29 @@
 import createItem from "./services/item.js";
+import * as cartService from "./services/cart.js"
 
 const cart = [];
+const wishList = [];
 
 async function main() {
     try {
         console.log('Welcome to your Shopee Cart!');
 
-        const item1 = await createItem('celular', 20, 3);
+        const item1 = await createItem('Celular', 20, 3);
         
 
         const item2 = await createItem('Tenis', 500, 2);
         
+        await cartService.addItem(cart, item1);
+        await cartService.addItem(cart, item2);
 
-        console.log(item1.subtotal()); // Call subtotal as a function
-        console.log(item2.subtotal()); // Call subtotal as a function
+
+        
+        cartService.deleteItem(cart, 'Celular')
+
+
+        cartService.calculateTotal(cart);
+        
+        
     } catch (error) {
         console.error('Error:', error);
     }
